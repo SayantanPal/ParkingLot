@@ -55,7 +55,7 @@ public class ParkingLot {
 
     public boolean unparkVehicle(Vehicle vehicle) {
         for (ParkingLevel parkingLevel : parkingLevels) {
-            if (parkingLevel.freeSpot(vehicle)) {
+            if (parkingLevel.freeSpotFromVehicle(vehicle)) {
                 System.out.printf("\n%s with License Number %s unparked safely.\n", vehicle.getType().getValue(), vehicle.getLicensePlate());
                 return true;
             }

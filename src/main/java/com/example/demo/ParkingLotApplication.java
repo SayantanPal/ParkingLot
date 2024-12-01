@@ -6,6 +6,7 @@ import com.example.demo.model.vehicles.Truck;
 import com.example.demo.model.vehicles.Vehicle;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// Driver class
 @SpringBootApplication
 public class ParkingLotApplication {
 
