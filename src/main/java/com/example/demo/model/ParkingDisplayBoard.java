@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
 import com.example.demo.model.spots.*;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,12 +17,18 @@ public class ParkingDisplayBoard {
     private final List<LargeSpot> largeFreeSpots;
     private final List<TwoWheelerSpot> twoWheelerFreeSpot;
 
+    private static final ParkingDisplayBoard parkingDisplayBoard = new ParkingDisplayBoard();
+
     public ParkingDisplayBoard(){
         this.compactFreeSpots = new ArrayList<>();
         this.handicappedFreeSpots = new ArrayList<>();
         this.electricFreeSpots = new ArrayList<>();
         this.largeFreeSpots = new ArrayList<>();
         this.twoWheelerFreeSpot = new ArrayList<>();
+    }
+
+    public static ParkingDisplayBoard getInstance(){
+        return parkingDisplayBoard;
     }
 
     public void addCompactFreeSpots(CompactSpot compactSpot){
@@ -73,4 +77,25 @@ public class ParkingDisplayBoard {
                 twoWheelerFreeSpot.size(), Arrays.toString(twoWheelerFreeSpot.stream().mapToInt(TwoWheelerSpot::getSpotNumber).toArray()));
     }
 
+    public void addFreeSpot(ParkingSpot parkingSpot) {
+        switch (parkingSpot.getParkingSpotType()) {
+            case ParkingSpotType.COMPACT:
+                addCompactFreeSpots((CompactSpot) parkingSpot);
+                break;
+            case ParkingSpotType.HANDICAPPED:
+                addHandicappedFreeSpots((HandicappedSpot) parkingSpot);
+                break;
+            case ParkingSpotType.ELECTRIC:
+                addElectricFreeSpots((ElectricSpot) parkingSpot);
+                break;
+            case ParkingSpotType.LARGE:
+                addLargeFreeSpots((LargeSpot) parkingSpot);
+                break;
+            case ParkingSpotType.TWO_WHEELER:
+                addTwoWheelerFreeSpots((TwoWheelerSpot) parkingSpot);
+                break;
+            default:
+                break;
+        }
+    }
 }

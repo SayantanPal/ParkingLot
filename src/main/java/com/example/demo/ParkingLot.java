@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.model.spots.ParkingSpot;
 import com.example.demo.model.vehicles.Vehicle;
 import com.example.demo.strategy.DefaultParkingStrategy;
 import com.example.demo.strategy.ParkingStrategy;
@@ -36,8 +37,9 @@ public class ParkingLot {
         ParkingStrategy parkingStrategy = new DefaultParkingStrategy();
         List<ParkingLevel> parkingLevels = parkingStrategy.findParkingLevel(this.parkingLevels);
         for(ParkingLevel parkingLevel: parkingLevels){
-            if(parkingLevel.assignVehicleToSpot(vehicle)){
-                 System.out.printf("%s(license plate number: %s) parked safely at floor: %d\n", vehicle.getType().getValue(), vehicle.getLicensePlate(), parkingLevel.getFloor());
+            ParkingSpot parkingSpot = parkingLevel.assignVehicleToSpot(vehicle);
+            if( parkingSpot != null){
+                 System.out.printf("%s(license plate number: %s) parked safely at floor: %d and at parking Spot: %d of type: %s\n", vehicle.getType().getValue(), vehicle.getLicensePlate(), parkingLevel.getFloor(), parkingSpot.getSpotNumber(), parkingSpot.getParkingSpotType());
                  return true;
             }
         }

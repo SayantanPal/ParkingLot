@@ -3,15 +3,23 @@ package com.example.demo.model.spots;
 import com.example.demo.model.ParkingSpotType;
 import com.example.demo.model.vehicles.Vehicle;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public abstract class ParkingSpot {
-    private final int spotNumber;
+    @Setter
+    public int spotNumber;
+
     private final ParkingSpotType parkingSpotType;
     private Vehicle parkedVehicle;
 
+    @Deprecated
     public ParkingSpot(int spotNumber, ParkingSpotType parkingSpotType) {
         this.spotNumber = spotNumber;
+        this.parkingSpotType = parkingSpotType;
+    }
+
+    public ParkingSpot(ParkingSpotType parkingSpotType) {
         this.parkingSpotType = parkingSpotType;
     }
 
