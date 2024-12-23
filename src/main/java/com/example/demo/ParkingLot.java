@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.model.ParkingDisplayBoard;
 import com.example.demo.model.spots.ParkingSpot;
 import com.example.demo.model.vehicles.Vehicle;
 import com.example.demo.strategy.DefaultParkingStrategy;
@@ -45,14 +46,6 @@ public class ParkingLot {
         }
         System.out.println("Could not find any level and slots to park your vehicle.");
         return false;
-//        for (ParkingLevel parkingLevel : parkingLevels) {
-//            if (parkingLevel.parkVehicle(vehicle)) {
-//                System.out.println("Vehicle parked safely.");
-//                return true;
-//            }
-//        }
-//        System.out.println("Could not find any level and slots to park your vehicle.");
-//        return false;
     }
 
     public boolean unparkVehicle(Vehicle vehicle) {
@@ -67,13 +60,6 @@ public class ParkingLot {
     }
 
     public void displayAvailability() {
-        for (ParkingLevel parkingLevel : parkingLevels) {
-            parkingLevel.displayAvailability();
-        }
-    }
-
-    // future scope
-    public void displayAvailability(ParkingLevel parkingLevel){
-        parkingLevel.displayAvailability();
+        ParkingDisplayBoard.displayAvailability(this);
     }
 }

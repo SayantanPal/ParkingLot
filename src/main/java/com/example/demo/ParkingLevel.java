@@ -15,7 +15,6 @@ import java.util.Optional;
 public class ParkingLevel {
     private final int floor; // each level corresponds to a single floor in the parking lot
     private final List<ParkingSpot> parkingSpots;
-    private ParkingDisplayBoard parkingDisplayBoard;
     private int twoWheelerSpots;
     private int compactSpots;
     private int largeSpots;
@@ -40,25 +39,20 @@ public class ParkingLevel {
         for(int i = 1; i <= this.twoWheelerSpots; i++){
             ParkingSpot parkingSpot = new TwoWheelerSpot(i);
             parkingSpots.add(parkingSpot);
-            this.updateDisplayBoard(parkingSpot);
-            this.updateDisplayBoard2(parkingSpot);
         }
 
         for(int i = 1; i <= this.compactSpots; i++){
             ParkingSpot parkingSpot = new CompactSpot(i);
             parkingSpots.add(parkingSpot);
-            this.updateDisplayBoard(parkingSpot);
-            this.updateDisplayBoard2(parkingSpot);
         }
 
         for(int i = 1; i <= this.largeSpots; i++){
             ParkingSpot parkingSpot = new LargeSpot(i);
             parkingSpots.add(parkingSpot);
-            this.updateDisplayBoard(parkingSpot);
-            this.updateDisplayBoard2(parkingSpot);
         }
     }
 
+    @Deprecated
     private void initializeParkingSpot(int initialNumOfSpots) {
         // Assign spots in ration of 5:4:1 for bikes, cars and trucks
         double spotsForTwoWheeler = 0.5;
@@ -71,17 +65,14 @@ public class ParkingLevel {
         for (int i = 1; i <= numOfTwoWheelerSlots; i++) {
             parkingSpot = new TwoWheelerSpot(i);
             parkingSpots.add(parkingSpot);
-            this.updateDisplayBoard(parkingSpot);
         }
         for (int i = numOfTwoWheelerSlots + 1; i <= numOfTwoWheelerSlots + numOfCompactSlots; i++) {
             parkingSpot = new CompactSpot(i);
             parkingSpots.add(parkingSpot);
-            this.updateDisplayBoard(parkingSpot);
         }
         for (int i = numOfTwoWheelerSlots + numOfCompactSlots + 1; i <= initialNumOfSpots; i++) {
             parkingSpot = new LargeSpot(i);
             parkingSpots.add(parkingSpot);
-            this.updateDisplayBoard(parkingSpot);
         }
     }
 
@@ -106,7 +97,7 @@ public class ParkingLevel {
         Optional<ParkingSpot> parkingSpot = parkingStrategy.findParkingSpot(parkingSpots, vehicle);
         if(parkingSpot.isPresent()){
             parkingSpot.get().occupy(vehicle);
-            this.updateDisplayBoard(parkingSpot.get());
+//            this.updateDisplayBoard(parkingSpot.get());
             return parkingSpot.get();
         }
         return null;
@@ -116,40 +107,14 @@ public class ParkingLevel {
         for (ParkingSpot spot : parkingSpots) {
             if (spot.checkIfAlreadyParked(vehicle)) {
                 spot.vacate();
-                this.updateDisplayBoard(spot);
                 return true;
             }
         }
         return false;
     }
 
-    private void updateDisplayBoard(ParkingSpot parkingSpot) {
-        this.parkingDisplayBoard = new ParkingDisplayBoard();
-        if(parkingSpot.isEmpty()) {
-            if(parkingSpot instanceof CompactSpot) {
-                this.parkingDisplayBoard.addCompactFreeSpots((CompactSpot) parkingSpot);
-            } else if (parkingSpot instanceof HandicappedSpot) {
-                this.parkingDisplayBoard.addHandicappedFreeSpots((HandicappedSpot) parkingSpot);
-            } else if (parkingSpot instanceof LargeSpot) {
-                this.parkingDisplayBoard.addLargeFreeSpots((LargeSpot) parkingSpot);
-            } else if (parkingSpot instanceof ElectricSpot) {
-                this.parkingDisplayBoard.addElectricFreeSpots((ElectricSpot) parkingSpot);
-            } else if (parkingSpot instanceof TwoWheelerSpot) {
-                this.parkingDisplayBoard.addTwoWheelerFreeSpots((TwoWheelerSpot) parkingSpot);
-            }
-        }
-    }
-
-    private void updateDisplayBoard2(ParkingSpot parkingSpot) {
-        this.parkingDisplayBoard = ParkingDisplayBoard.getInstance();
-        this.parkingDisplayBoard.addFreeSpot(parkingSpot);
-    }
-
     public void displayAvailability() {
-        System.out.printf("\nParking Level of floor %d Availability:\n", this.floor);
-//        ParkingDisplayBoard parkingDisplayBoard = new ParkingDisplayBoard();
-        ParkingDisplayBoard parkingDisplayBoard = ParkingDisplayBoard.getInstance();
-        parkingDisplayBoard.showEmptySpotNumber();
+        ParkingDisplayBoard.displayAvailability(this);
     }
 
     public boolean areAllParkingSpotsFull() {

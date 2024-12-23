@@ -20,7 +20,7 @@ public class ParkingLotApplication {
 		parkingLot.addParkingLevel(new ParkingLevel(2, 5,4, 1));
 		parkingLot.addParkingLevel(new ParkingLevel(1, 5, 4, 1));
 
-
+		parkingLot.displayAvailability();
 
 		Vehicle car = new Car("ABC123");
 		Vehicle truck = new Truck("XYZ789");

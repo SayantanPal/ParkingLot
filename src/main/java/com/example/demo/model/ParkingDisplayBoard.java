@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.ParkingLevel;
+import com.example.demo.ParkingLot;
 import com.example.demo.model.spots.*;
 import lombok.Getter;
 
@@ -11,91 +13,49 @@ import java.util.List;
 //@Builder
 public class ParkingDisplayBoard {
 
-    private final List<CompactSpot> compactFreeSpots;
-    private final List<HandicappedSpot> handicappedFreeSpots;
-    private final List<ElectricSpot> electricFreeSpots;
-    private final List<LargeSpot> largeFreeSpots;
-    private final List<TwoWheelerSpot> twoWheelerFreeSpot;
+    public static void displayAvailability(ParkingLevel parkingLevel) {
+        List<ParkingSpot> parkingSpots = parkingLevel.getParkingSpots();
 
-    private static final ParkingDisplayBoard parkingDisplayBoard = new ParkingDisplayBoard();
+        List<ParkingSpot> compactSpots = parkingSpots.stream().filter(parkingSpot -> parkingSpot.getParkingSpotType().equals(ParkingSpotType.COMPACT)).toList();
+        List<ParkingSpot> handicappedSpots = parkingSpots.stream().filter(parkingSpot -> parkingSpot.getParkingSpotType().equals(ParkingSpotType.HANDICAPPED)).toList();
+        List<ParkingSpot> electricSpots = parkingSpots.stream().filter(parkingSpot -> parkingSpot.getParkingSpotType().equals(ParkingSpotType.ELECTRIC)).toList();
+        List<ParkingSpot> twoWheelerSpots = parkingSpots.stream().filter(parkingSpot -> parkingSpot.getParkingSpotType().equals(ParkingSpotType.TWO_WHEELER)).toList();
+        List<ParkingSpot> largeSpots = parkingSpots.stream().filter(parkingSpot -> parkingSpot.getParkingSpotType().equals(ParkingSpotType.LARGE)).toList();
 
-    public ParkingDisplayBoard(){
-        this.compactFreeSpots = new ArrayList<>();
-        this.handicappedFreeSpots = new ArrayList<>();
-        this.electricFreeSpots = new ArrayList<>();
-        this.largeFreeSpots = new ArrayList<>();
-        this.twoWheelerFreeSpot = new ArrayList<>();
-    }
+        List<ParkingSpot> freeCompactSpots = compactSpots.stream().filter(ParkingSpot::isEmpty).toList();
+        List<ParkingSpot> freeHandicappedSpots = handicappedSpots.stream().filter(ParkingSpot::isEmpty).toList();
+        List<ParkingSpot> freeElectricSpots = electricSpots.stream().filter(ParkingSpot::isEmpty).toList();
+        List<ParkingSpot> freeTwoWheelerSpots = twoWheelerSpots.stream().filter(ParkingSpot::isEmpty).toList();
+        List<ParkingSpot> freeLargeSpots = largeSpots.stream().filter(ParkingSpot::isEmpty).toList();
 
-    public static ParkingDisplayBoard getInstance(){
-        return parkingDisplayBoard;
-    }
+//        List<ParkingSpot> occupiedCompactSpots = compactSpots.stream().filter(parkingSpot -> !parkingSpot.isEmpty()).toList();
+//        List<ParkingSpot> occupiedHandicappedSpots = handicappedSpots.stream().filter(parkingSpot -> !parkingSpot.isEmpty()).toList();
+//        List<ParkingSpot> occupiedElectricSpots = electricSpots.stream().filter(parkingSpot -> !parkingSpot.isEmpty()).toList();
+//        List<ParkingSpot> occupiedTwoWheelerSpots = twoWheelerSpots.stream().filter(parkingSpot -> !parkingSpot.isEmpty()).toList();
+//        List<ParkingSpot> occupiedLargeSpots = largeSpots.stream().filter(parkingSpot -> !parkingSpot.isEmpty()).toList();
 
-    public void addCompactFreeSpots(CompactSpot compactSpot){
-        compactFreeSpots.add(compactSpot);
-    }
 
-    public void addHandicappedFreeSpots(HandicappedSpot handicappedSpot){
-        handicappedFreeSpots.add(handicappedSpot);
-    }
 
-    public void addElectricFreeSpots(ElectricSpot electricSpot){
-        electricFreeSpots.add(electricSpot);
-    }
-
-    public void addLargeFreeSpots(LargeSpot largeSpot){
-        largeFreeSpots.add(largeSpot);
-    }
-
-    public void addTwoWheelerFreeSpots(TwoWheelerSpot twoWheelerSpot){
-        twoWheelerFreeSpot.add(twoWheelerSpot);
-    }
-
-    public void showEmptySpotCount() {
-        System.out.printf("\nAvailable Compact Parking Spots: %d" +
-                          "\nAvailable Handicapped Parking Spots: %d" +
-                          "\nAvailable Electric Parking Spots: %d" +
-                          "\nAvailable Large Parking Spots: %d" +
-                          "\nAvailable Two Wheeler Parking Spots: %d\n",
-                          compactFreeSpots.size(),
-                          handicappedFreeSpots.size(),
-                          electricFreeSpots.size(),
-                          largeFreeSpots.size(),
-                          twoWheelerFreeSpot.size());
-    }
-
-    public void showEmptySpotNumber() {
         System.out.printf("\nAvailable Compact Parking Spots(%d): %s" +
                         "\nAvailable Handicapped Parking Spots(%d): %s" +
                         "\nAvailable Electric Parking Spots(%d): %s" +
                         "\nAvailable Large Parking Spots(%d): %s" +
                         "\nAvailable Two Wheeler Parking Spots(%d): %s\n",
-                compactFreeSpots.size(), Arrays.toString(compactFreeSpots.stream().mapToInt(CompactSpot::getSpotNumber).toArray()),
-                handicappedFreeSpots.size(), Arrays.toString(handicappedFreeSpots.stream().mapToInt(HandicappedSpot::getSpotNumber).toArray()),
-                electricFreeSpots.size(), Arrays.toString(electricFreeSpots.stream().mapToInt(ElectricSpot::getSpotNumber).toArray()),
-                largeFreeSpots.size(), Arrays.toString(largeFreeSpots.stream().mapToInt(LargeSpot::getSpotNumber).toArray()),
-                twoWheelerFreeSpot.size(), Arrays.toString(twoWheelerFreeSpot.stream().mapToInt(TwoWheelerSpot::getSpotNumber).toArray()));
+                freeCompactSpots.size(), printArrayForParkingSpots(freeCompactSpots),
+                freeHandicappedSpots.size(), printArrayForParkingSpots(freeHandicappedSpots),
+                freeElectricSpots.size(), printArrayForParkingSpots(freeElectricSpots),
+                freeTwoWheelerSpots.size(), printArrayForParkingSpots(freeTwoWheelerSpots),
+                freeLargeSpots.size(), printArrayForParkingSpots(freeLargeSpots));
     }
 
-    public void addFreeSpot(ParkingSpot parkingSpot) {
-        switch (parkingSpot.getParkingSpotType()) {
-            case ParkingSpotType.COMPACT:
-                addCompactFreeSpots((CompactSpot) parkingSpot);
-                break;
-            case ParkingSpotType.HANDICAPPED:
-                addHandicappedFreeSpots((HandicappedSpot) parkingSpot);
-                break;
-            case ParkingSpotType.ELECTRIC:
-                addElectricFreeSpots((ElectricSpot) parkingSpot);
-                break;
-            case ParkingSpotType.LARGE:
-                addLargeFreeSpots((LargeSpot) parkingSpot);
-                break;
-            case ParkingSpotType.TWO_WHEELER:
-                addTwoWheelerFreeSpots((TwoWheelerSpot) parkingSpot);
-                break;
-            default:
-                break;
+    public static void displayAvailability(ParkingLot parkingLot) {
+        for (ParkingLevel parkingLevel : parkingLot.getParkingLevels()) {
+            System.out.printf("\nParking Level of floor %d Availability:\n", parkingLevel.getFloor());
+            displayAvailability(parkingLevel);
         }
+    }
+
+    private static String printArrayForParkingSpots(List<ParkingSpot> list){
+        return Arrays.toString(list.stream().mapToInt(ParkingSpot::getSpotNumber).toArray());
     }
 }
