@@ -16,12 +16,6 @@ public class DefaultParkingStrategy implements ParkingStrategy {
         return parkings.stream()
                 .filter(parkingSpot -> parkingSpot.checkIfParkingPossible(vehicle) && vehicle.canFitInSpot(parkingSpot))
                 .findFirst();
-//        for(ParkingSpot parkingSpot: parkings){
-//            if(parkingSpot.checkIfParkingPossible(vehicle) && vehicle.canFitInSpot(parkingSpot)){
-//                return Optional.of(parkingSpot);
-//            }
-//        }
-//        return Optional.empty();
     }
 
 public List<ParkingLevel> findParkingLevel(List<ParkingLevel> parkingLevels) {

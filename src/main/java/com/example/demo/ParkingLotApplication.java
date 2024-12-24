@@ -6,6 +6,7 @@ import com.example.demo.model.vehicles.Truck;
 import com.example.demo.model.vehicles.Vehicle;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// Driver class
 @SpringBootApplication
 public class ParkingLotApplication {
 
@@ -13,8 +14,13 @@ public class ParkingLotApplication {
 //		SpringApplication.run(ParkingLotApplication.class, args);
 
 		ParkingLot parkingLot = ParkingLot.getInstance();
-		parkingLot.addParkingLevel(new ParkingLevel(2, 20));
-		parkingLot.addParkingLevel(new ParkingLevel(1, 10));
+//		parkingLot.addParkingLevel(new ParkingLevel(2, 20));
+//		parkingLot.addParkingLevel(new ParkingLevel(1, 10));
+
+		parkingLot.addParkingLevel(new ParkingLevel(2, 5,4, 1));
+		parkingLot.addParkingLevel(new ParkingLevel(1, 5, 4, 1));
+
+		parkingLot.displayAvailability();
 
 		Vehicle car = new Car("ABC123");
 		Vehicle truck = new Truck("XYZ789");

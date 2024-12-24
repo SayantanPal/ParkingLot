@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.model.ParkingDisplayBoard;
+import com.example.demo.model.spots.ParkingSpot;
 import com.example.demo.model.vehicles.Vehicle;
 import com.example.demo.strategy.DefaultParkingStrategy;
 import com.example.demo.strategy.ParkingStrategy;
@@ -36,26 +38,19 @@ public class ParkingLot {
         ParkingStrategy parkingStrategy = new DefaultParkingStrategy();
         List<ParkingLevel> parkingLevels = parkingStrategy.findParkingLevel(this.parkingLevels);
         for(ParkingLevel parkingLevel: parkingLevels){
-            if(parkingLevel.assignVehicleToSpot(vehicle)){
-                 System.out.printf("%s(license plate number: %s) parked safely at floor: %d\n", vehicle.getType().getValue(), vehicle.getLicensePlate(), parkingLevel.getFloor());
+            ParkingSpot parkingSpot = parkingLevel.assignVehicleToSpot(vehicle);
+            if( parkingSpot != null){
+                 System.out.printf("%s(license plate number: %s) parked safely at floor: %d and at parking Spot: %d of type: %s\n", vehicle.getType().getValue(), vehicle.getLicensePlate(), parkingLevel.getFloor(), parkingSpot.getSpotNumber(), parkingSpot.getParkingSpotType());
                  return true;
             }
         }
         System.out.println("Could not find any level and slots to park your vehicle.");
         return false;
-//        for (ParkingLevel parkingLevel : parkingLevels) {
-//            if (parkingLevel.parkVehicle(vehicle)) {
-//                System.out.println("Vehicle parked safely.");
-//                return true;
-//            }
-//        }
-//        System.out.println("Could not find any level and slots to park your vehicle.");
-//        return false;
     }
 
     public boolean unparkVehicle(Vehicle vehicle) {
         for (ParkingLevel parkingLevel : parkingLevels) {
-            if (parkingLevel.freeSpot(vehicle)) {
+            if (parkingLevel.freeSpotFromVehicle(vehicle)) {
                 System.out.printf("\n%s with License Number %s unparked safely.\n", vehicle.getType().getValue(), vehicle.getLicensePlate());
                 return true;
             }
@@ -65,13 +60,6 @@ public class ParkingLot {
     }
 
     public void displayAvailability() {
-        for (ParkingLevel parkingLevel : parkingLevels) {
-            parkingLevel.displayAvailability();
-        }
-    }
-
-    // future scope
-    public void displayAvailability(ParkingLevel parkingLevel){
-        parkingLevel.displayAvailability();
+        ParkingDisplayBoard.displayAvailability(this);
     }
 }
