@@ -37,15 +37,19 @@ public class ParkingDisplayBoard {
 
 
         System.out.printf("\nAvailable Compact Parking Spots(%d): %s" +
-                        "\nAvailable Handicapped Parking Spots(%d): %s" +
-                        "\nAvailable Electric Parking Spots(%d): %s" +
+//                        "\nAvailable Handicapped Parking Spots(%d): %s" +
+//                        "\nAvailable Electric Parking Spots(%d): %s" +
                         "\nAvailable Large Parking Spots(%d): %s" +
-                        "\nAvailable Two Wheeler Parking Spots(%d): %s\n",
+                        "\nAvailable Two Wheeler Parking Spots(%d): %s\n"
+//                        "\n"
+                        ,
                 freeCompactSpots.size(), printArrayForParkingSpots(freeCompactSpots),
-                freeHandicappedSpots.size(), printArrayForParkingSpots(freeHandicappedSpots),
-                freeElectricSpots.size(), printArrayForParkingSpots(freeElectricSpots),
-                freeTwoWheelerSpots.size(), printArrayForParkingSpots(freeTwoWheelerSpots),
-                freeLargeSpots.size(), printArrayForParkingSpots(freeLargeSpots));
+//                freeHandicappedSpots.size(), printArrayForParkingSpots(freeHandicappedSpots),
+//                freeElectricSpots.size(), printArrayForParkingSpots(freeElectricSpots),
+                freeLargeSpots.size(), printArrayForParkingSpots(freeLargeSpots),
+                freeTwoWheelerSpots.size(), printArrayForParkingSpots(freeTwoWheelerSpots)
+               )
+        ;
     }
 
     public static void displayAvailability(ParkingLot parkingLot) {
