@@ -27,7 +27,7 @@ public abstract class ParkingSpot {
         return this.parkedVehicle == null;
     }
 
-    public boolean hasAnyVehicleParked(){
+    private boolean hasAnyVehicleParked(){
         return this.parkedVehicle != null;
     }
 
@@ -35,7 +35,7 @@ public abstract class ParkingSpot {
 //        return this.vehicleType == vehicle.getType();
 //    }
 
-    public boolean hasSameVehicleParked(Vehicle vehicle){
+    private boolean hasSameVehicleParked(Vehicle vehicle){
         return this.parkedVehicle.equals(vehicle);
     }
 

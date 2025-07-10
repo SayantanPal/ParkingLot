@@ -17,20 +17,23 @@ public class ParkingLotApplication {
 //		parkingLot.addParkingLevel(new ParkingLevel(2, 20));
 //		parkingLot.addParkingLevel(new ParkingLevel(1, 10));
 
+		// Admin
 		parkingLot.addParkingLevel(new ParkingLevel(2, 5,4, 1));
 		parkingLot.addParkingLevel(new ParkingLevel(1, 5, 4, 1));
 
+		// Admin/User
 		parkingLot.displayAvailability();
 
 		Vehicle car = new Car("ABC123");
-		Vehicle truck = new Truck("XYZ789");
+		Vehicle truck1 = new Truck("XYZ789");
+		Vehicle truck2 = new Truck("XYZ123");
 		Vehicle motorcycle = new Motorcycle("M1234");
 
 		// Park vehicles
 		parkingLot.parkVehicle(car);
-		parkingLot.parkVehicle(truck);
+		parkingLot.parkVehicle(new Truck("XYZ789"));//parkingLot.parkVehicle("Truck", "XYZ789")
 		parkingLot.parkVehicle(motorcycle);
-		parkingLot.parkVehicle(truck);
+		parkingLot.parkVehicle(truck2);
 
 		// Display availability
 		parkingLot.displayAvailability();
